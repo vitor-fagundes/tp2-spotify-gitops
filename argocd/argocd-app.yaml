@@ -2,13 +2,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: tp2-spotify
-  namespace: argocd
+  namespace: vitornogueira
 spec:
   project: default
   source:
     repoURL: https://github.com/vitor-fagundes/tp2-spotify-gitops.git
     targetRevision: main
-    path: .
+    path: k8s
   destination:
     server: https://kubernetes.default.svc
     namespace: vitornogueira
@@ -16,4 +16,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-
