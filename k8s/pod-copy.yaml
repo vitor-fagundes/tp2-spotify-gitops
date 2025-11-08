@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-copy
+  namespace: vitornogueira
+spec:
+  containers:
+    - name: copier
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 3600"]
+      volumeMounts:
+        - name: shared
+          mountPath: /mnt/shared
+  volumes:
+    - name: shared
+      persistentVolumeClaim:
+        claimName: project2-pvc

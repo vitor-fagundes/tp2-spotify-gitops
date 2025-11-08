@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-ml-0-1
+  namespace: vitornogueira
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: ml
+          image: docker.io/fagundes1500/tp2-ml:0.2
+          env:
+            - name: DATASET
+              value: "/mnt/shared/ds1_tiny.csv"   # <<< arquivo no PVC
+            - name: MODEL_DIR
+              value: "/mnt/shared"
+          volumeMounts:
+            - name: shared
+              mountPath: /mnt/shared
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1800Mi"
+              cpu: "500m"
+      volumes:
+        - name: shared
+          persistentVolumeClaim:
+            claimName: project2-pvc
